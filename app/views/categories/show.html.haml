@@ -1,9 +1,7 @@
 - @details.each do |detail|
-  = detail.name
+  = link_to "#{detail.name}", member_category_detail_path(params[:member_id],  detail)
 
 .container
-  %h2 Chart.js — Pie Chart Demo (apples)
+  %h2 Chart.js
   %div
     %canvas#myChart
-
-%script{src:  "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"}

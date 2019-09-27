@@ -1,0 +1,2 @@
+class Howmuch < ApplicationRecord
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_23_113205) do
+ActiveRecord::Schema.define(version: 2019_09_27_082755) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -20,13 +20,24 @@ ActiveRecord::Schema.define(version: 2019_09_23_113205) do
 
   create_table "details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "money", null: false
     t.bigint "category_id", null: false
-    t.bigint "member_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_details_on_category_id"
-    t.index ["member_id"], name: "index_details_on_member_id"
+  end
+
+  create_table "howmuches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "money", null: false
+    t.bigint "member_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "detail_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "where"
+    t.index ["category_id"], name: "index_howmuches_on_category_id"
+    t.index ["detail_id"], name: "index_howmuches_on_detail_id"
+    t.index ["member_id"], name: "index_howmuches_on_member_id"
   end
 
   create_table "members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -36,5 +47,7 @@ ActiveRecord::Schema.define(version: 2019_09_23_113205) do
   end
 
   add_foreign_key "details", "categories"
-  add_foreign_key "details", "members"
+  add_foreign_key "howmuches", "categories"
+  add_foreign_key "howmuches", "details"
+  add_foreign_key "howmuches", "members"
 end

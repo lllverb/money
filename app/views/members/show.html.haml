@@ -1,2 +1,7 @@
 - @categories.each do |category|
   = link_to "#{category.name}", member_category_path(params[:id], category)
+
+.container
+%h2 Chart.js
+%div
+  %canvas#myChart

@@ -5,7 +5,8 @@ class MembersController < ApplicationController
   end
 
   def show
-    # binding.pry
     @categories = Category.all
+    # gon.category   = Category.all
+    # gon.howmuches  = Howmuch.where(member_id: params[:id])
   end
 end

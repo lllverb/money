@@ -1,0 +1,2 @@
+class HowmuchesController < ApplicationController 
+end
