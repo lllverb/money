@@ -18,9 +18,9 @@ document.addEventListener("turbolinks:load", function() {
 
   // detailを表示
   if (href.includes('details')){
-
+    console.log(gon.howmuch)
     i = 1
-    while (i <= gon.howmuch.length + 1){
+    while (i < 100){
       let result = gon.howmuch.filter(function(value){
         return value.detail_id == i
       })
@@ -61,22 +61,23 @@ document.addEventListener("turbolinks:load", function() {
   } else if (href.includes('categories')){
     // 配列を定義　名前と金額をぶちこんで行く
     i = 1
-
+    
     gon.howmuch.forEach(function(e){
       labels.push(e.name);
     })
-    while (i <= gon.howmuches.length + 1){
+    while (i <= 100){
       let result = gon.howmuches.filter(function(value){
         return value.detail_id == i
       })
       total = 0
-      result.map(x => x).forEach(function(x){
-        total += x.money
-      })
-      
-      data.push(total)
-      console.log(gon.howmuches)
-      console.log(result)
+
+        result.map(x => x).forEach(function(x){
+          total += x.money
+        })
+        
+        data.push(total)
+        console.log(gon.howmuches)
+        console.log(result)
       i += 1
     }
     
@@ -111,7 +112,7 @@ document.addEventListener("turbolinks:load", function() {
     gon.howmuches.forEach(function(e){
       labels.push(e.name);
     })
-    while (i <= gon.howmuches.length + 1){
+    while (i <= 100){
       let result = gon.howmuches.filter(function(value){
         return value.detail_id == i
       })
