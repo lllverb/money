@@ -1,3 +1,11 @@
 .members
   - @members.each do |member|
     = link_to "#{member.name}", member_path(member.id)
+
+.container
+  %h2 Chart.js
+  %div
+    %canvas#myChart
+
+
+= link_to "カテゴリ別ページへ", categories2_index_path

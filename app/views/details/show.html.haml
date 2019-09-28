@@ -1,4 +1,21 @@
 .container
-  %h2 Chart.js
-  %div
-    %canvas#myChart
+  %table{border: 1}
+    %tr
+      %th 項目
+      %th 値段
+      %th 場所
+    - @howmuches.each do |howmuch|
+      %tr
+        %td 
+          = howmuch.name
+        %td 
+          = howmuch.money.to_s(:delimited)
+        %td 
+          = howmuch.where
+  .form
+    = form_for [@member, @category, @detail, @howmuch] do |f|
+      .howmuch-form
+        = f.text_field :name, placeholder: "項目"
+        = f.text_field :money, placeholder: "値段"
+        = f.text_field :where, placeholder: "場所"
+      = f.submit

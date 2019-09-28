@@ -1,5 +1,5 @@
 - @details.each do |detail|
-  = link_to "#{detail.name}", member_category_detail_path(params[:member_id],  detail)
+  = link_to "#{detail.name}", member_category_detail_path(params[:member_id], params[:id], detail)
 
 .container
   %h2 Chart.js
