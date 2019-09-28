@@ -69,3 +69,4 @@ gem "bootstrap4-datetime-picker-rails"
 gem 'momentjs-rails'
 gem "font-awesome-rails"
 gem 'bootstrap', '~> 4.3.1'
+gem 'fullcalendar-rails'

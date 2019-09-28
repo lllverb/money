@@ -11,7 +11,7 @@ document.addEventListener("turbolinks:load", function() {
         alert('全項目入力してください');
         return false;
     }
-});
+  });
 
   // urlを取得//
   href = location.href

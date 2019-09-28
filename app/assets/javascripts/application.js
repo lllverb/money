@@ -18,6 +18,8 @@
 //= require activestorage
 //= require moment
 //= require moment/ja.js
+//= require fullcalendar
+//= require fullcalendar/lang/ja
 //= require tempusdominus-bootstrap-4.js
 //= require turbolinks
 //= require_tree .
