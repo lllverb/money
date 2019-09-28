@@ -4,7 +4,13 @@ class MembersController < ApplicationController
     @members = Member.all
     gon.howmuch = Member.all
     gon.howmuches = Howmuch.all
-    @months = Howmuch.where(when: Time.local(2019, params[:id]).all_month)
+    # gon.howmuches = Howmuch.where(when: Time.local(params[:year_id], params[:id]).all_month)
+    
+    respond_to do |format|
+      format.html
+      format.json
+    end
+    # binding.pry
   end
   
   def show

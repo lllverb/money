@@ -4,7 +4,6 @@ document.addEventListener("turbolinks:load", function() {
   window.addEventListener('popstate', function(e) {
     window.location.reload();
   });
-
 //何も入力していない時押せないようにする。
   $('#new_howmuch').submit(function() {
     if ($.trim($("#howmuch_name").val()) === "" || $.trim($("#howmuch_money").val()) === ""|| $.trim($("#howmuch_where").val()) === ""|| $.trim($("#created_at").val()) === "") {
@@ -74,9 +73,69 @@ document.addEventListener("turbolinks:load", function() {
   }
 
 
-  //details2のページ//////////////////////////////////////////
   if (href.includes('details')　&& href.includes('members')){
-
+    
+//daysのページ//////////////////////////////////////////
+  } else if (href.includes('days')){
+    i = 1
+    while (i <= 10){
+      let result = gon.howmuches.filter(function(x){
+        return x.detail_id == i
+      })
+      total = 0
+      result.map(x => x).forEach(function(x){
+        total += x.money
+        gon.howmuch.forEach(function(e){
+          if (e.id == x.detail_id){
+            if (labels.indexOf(e.name) == -1) {
+              array.push(e);
+              labels.push(e.name);
+            }
+          }
+        })
+      })
+      if(total != 0){
+        data.push(total)
+        alltotal += total
+      }
+      i += 1
+    }
+    html = `<p>${alltotal.toLocaleString()}円</p>`
+    $('.container').append(html)
+    
+    
+    
+//monthsのページ//////////////////////////////////////////
+  } else if (href.includes('months')){
+    i = 1
+    while (i <= 10){
+      let result = gon.howmuches.filter(function(x){
+        return x.detail_id == i
+      })
+      total = 0
+      result.map(x => x).forEach(function(x){
+        total += x.money
+        gon.howmuch.forEach(function(e){
+          if (e.id == x.detail_id){
+            if (labels.indexOf(e.name) == -1) {
+              array.push(e);
+              labels.push(e.name);
+            }
+          }
+        })
+      })
+      if(total != 0){
+        data.push(total)
+        alltotal += total
+      }
+      i += 1
+    }
+    html = `<p>${alltotal.toLocaleString()}円</p>`
+    $('.container').append(html)
+    
+    
+    
+    //details2のページ//////////////////////////////////////////
   } else if (href.includes('details2')){
     i = 1
     while (i <= 10){
