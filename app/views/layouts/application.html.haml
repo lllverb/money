@@ -11,5 +11,5 @@
     %script{src: "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"}
 
   %body
-    = link_to "トップに戻る", root_path unless request.url == root_url
-    = yield
+  = link_to "トップに戻る", root_path unless request.url == root_url
+  = yield

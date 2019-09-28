@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_27_082755) do
+ActiveRecord::Schema.define(version: 2019_09_28_081234) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 2019_09_27_082755) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "where"
+    t.date "when"
     t.index ["category_id"], name: "index_howmuches_on_category_id"
     t.index ["detail_id"], name: "index_howmuches_on_detail_id"
     t.index ["member_id"], name: "index_howmuches_on_member_id"

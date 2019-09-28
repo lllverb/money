@@ -65,3 +65,7 @@ gem "pry-rails"
 gem "gon"
 gem 'jquery-turbolinks'
 gem 'jquery-rails'
+gem "bootstrap4-datetime-picker-rails"
+gem 'momentjs-rails'
+gem "font-awesome-rails"
+gem 'bootstrap', '~> 4.3.1'

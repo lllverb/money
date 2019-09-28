@@ -18,4 +18,11 @@
         = f.text_field :name, placeholder: "項目"
         = f.text_field :money, placeholder: "値段"
         = f.text_field :where, placeholder: "場所"
-      = f.submit
+
+
+      .input-group{"data-target-input" => "nearest"}
+        = f.text_field :when, id: "created_at", class: "form-control datepicker", data: { target: '#created_at'}
+        .input-group-append{"data-target" => "#created_at", "data-toggle" => "datetimepicker"}
+          .input-group-text
+            %i.fa.fa-calendar
+      = f.submit value: "登録する"

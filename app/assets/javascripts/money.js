@@ -5,7 +5,13 @@ document.addEventListener("turbolinks:load", function() {
     window.location.reload();
   });
 
-
+//何も入力していない時押せないようにする。
+  $('#new_howmuch').submit(function() {
+    if ($.trim($("#howmuch_name").val()) === "" || $.trim($("#howmuch_money").val()) === ""|| $.trim($("#howmuch_where").val()) === ""|| $.trim($("#created_at").val()) === "") {
+        alert('全項目入力してください');
+        return false;
+    }
+});
 
   // urlを取得//
   href = location.href
@@ -51,9 +57,8 @@ document.addEventListener("turbolinks:load", function() {
     "#FF0099", "#CC0099", "#990099", "#660099", "#330099", "#000099",
     "#FF0066", "#CC0066", "#990066", "#660066", "#330066", "#000066",
     "#FF0033", "#CC0033", "#990033", "#660033", "#330033", "#000033",
-    "#FF0000", "#CC0000", "#990000", "#660000", "#330000", "#000000"
+    "#FF0000", "#CC0000", "#990000", "#660000", "#330000"
   ]
-  console.log(href)
 
   function shuffle(backgroundColor) {
     var n = backgroundColor.length, t, i;
