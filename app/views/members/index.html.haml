@@ -8,4 +8,4 @@
     %canvas#myChart
 
 = link_to "カテゴリ別ページへ", categories2_index_path
-#calendar
+= link_to "月別ページへ", year_month_path(Date.today.year, Date.today.month)

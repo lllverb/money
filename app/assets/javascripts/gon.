@@ -14,7 +14,9 @@ document.addEventListener("turbolinks:load", function() {
   const howmuch = gon.howmuch
   const howmuches = gon.howmuches
 
-  const ctx = document.getElementById("myChart").getContext('2d');
+  const labels = [];
+  const data   = [];
+  let alltotal = 0;
   const array    = []
   const backgroundColor = [
     "#CCFFFF", "#99FFFF", "#66FFFF", "#33FFFF", "#00FFFF", 
@@ -59,6 +61,12 @@ document.addEventListener("turbolinks:load", function() {
     e.preventDefault();
     const month = $('h2')[0].innerText.replace('年', '').replace('月', '').split(' ')
     href = '/years/' + month[0] + '/months/' + month[1]
+    const theyear = month[0]
+    const themonth = month[1]
+    console.log(gon.howmuches)
+    console.log(theyear)
+    console.log(themonth)
+    console.log(href)
     $.ajax({
       url: href,
       type: 'GET',
@@ -66,32 +74,16 @@ document.addEventListener("turbolinks:load", function() {
       })
       .done(function(data){
         $('.howmuches').each(function(e, x){
-          $('input').remove();
+          $('canvas').remove();
+          $('p').remove();
+          $('.container').append("<canvas id='myChart'></canvas>")
         })
-        const newArray = []
-        data.forEach(function(e){
-          newArray.push(e);
-          buildHTML(e.money)
-        })
-        resetCanvas();
-        buildPieChart(howmuch, newArray)
+        console.log(data.money)
       })
+      buildPieChart(howmuch, howmuches)
     })
 
-    function resetCanvas() {
-    $('#myChart').remove();
-    $('.myChart').append("<canvas id='myChart'></canvas>");
-  }
-
-  function buildHTML(data){
-    html = `<input class='howmuches' name='howmuches' type='hidden' value='${data}'>`
-    $('body').append(html)
-  }
-
   function buildPieChart(howmuch, howmuches){
-    const labels = [];
-    const data   = [];
-    let alltotal = 0;
 // urlを取得//
     href = location.href
 
@@ -170,7 +162,6 @@ document.addEventListener("turbolinks:load", function() {
         i += 1
       }
       html = `<p>${alltotal.toLocaleString()}円</p>`
-      $('p').remove()
       $('.container').append(html)
       
       

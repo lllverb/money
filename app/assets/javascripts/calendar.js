@@ -12,25 +12,10 @@ document.addEventListener("turbolinks:load", function() {
       location.href = '/years/' + theday[0] + '/months/' + theday[1] + '/days/' + theday[2]
     }
   });
-  $('.fc-button').on('click', function(e){
-    e.preventDefault();
-    const month = $('h2')[0].innerText.replace('年', '').replace('月', '').split(' ')
-    href = '/years/' + month[0] + '/months/' + month[1]
-    const theyear = month[0]
-    const themonth = month[1]
+
+  $('#calendar').on('ajax:complete', function(event) { //  #div はajax通信を行うdiv
+    var  response = event.detail[0].response;   // renderされた部分htmlはdetail[0].responseで取得できる
+    $('head').append(response);  //head要素に= Gon::Base.render_dataを追加
     console.log(gon.howmuches)
-    console.log(theyear)
-    console.log(themonth)
-    console.log(href)
-    $.ajax({
-      url: href,
-      type: 'GET',
-      dataType: 'json',
-      })
-      .done(function(){
-        $('#calendar').fullCalendar('removeEvents');
-        $('#calendar').fullCalendar('addEventSource', '');
-        $('#calendar').fullCalendar('rerenderEvents' );
-      })
-    })
+  });
 });

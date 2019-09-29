@@ -1,6 +1,8 @@
 .container
   %h1 Chart.js
-  %div
+  %div{class: "myChart"}
     %canvas#myChart
-
 #calendar
+
+- @howmuches.each do |howmuch|
+  %input{name:"howmuches", type: "hidden", value: howmuch.money , class: "howmuches"}
