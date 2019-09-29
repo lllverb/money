@@ -11,8 +11,8 @@ document.addEventListener("turbolinks:load", function() {
         return false;
     }
   });
-  const howmuch = gon.howmuch
-  const howmuches = gon.howmuches
+  var howmuch = gon.howmuch
+  var howmuches = gon.howmuches
 
   const ctx = document.getElementById("myChart").getContext('2d');
   const array    = []
@@ -88,296 +88,78 @@ document.addEventListener("turbolinks:load", function() {
     $('body').append(html)
   }
 
+  function shuffle(backgroundColor) {
+    var n = backgroundColor.length, t, i;
+    while (n) {
+      i = Math.floor(Math.random() * n--);
+      t = backgroundColor[n];
+      backgroundColor[n] = backgroundColor[i];
+      backgroundColor[i] = t;
+    }
+    return backgroundColor;
+  }
+
+  function calendarPieChart(howmuch, howmuches, labels, data, alltotal, myChart){
+    
+    i = 1
+    while (i <= 10){
+      let result = howmuches.filter(function(x){
+        if(href.includes('details2')){
+          return x.member_id  == i
+        } else if(href.includes('categories2')||href.includes('members')){
+          return x.category_id  == i
+        } else if (href.includes('categories')||href.includes('days')||href.includes('month')){
+          return x.detail_id  == i
+        } else {
+          return x.member_id == i
+        }
+      })
+      total = 0
+      result.map(x => x).forEach(function(x){
+        if(href.includes('details2')){
+          var id = x.member_id
+        } else if(href.includes('categories2')||href.includes('members')){
+          var id = x.category_id
+        } else if (href.includes('categories')||href.includes('days')|| href.includes('months')){
+          var id = x.detail_id
+        } else {
+          var id = x.member_id
+        }
+        total += x.money
+        howmuch.forEach(function(e){
+          if (e.id == id){
+            if (labels.indexOf(e.name) == -1) {
+              array.push(e);
+              labels.push(e.name);
+            }
+          }
+        })
+      })
+      if(total != 0){
+        data.push(total)
+        alltotal += total
+      }
+      i += 1
+    }
+    html = `<p>${alltotal.toLocaleString()}円</p>`
+    $('p').remove()
+    $('.container').append(html)
+  }
+
   function buildPieChart(howmuch, howmuches){
     const labels = [];
     const data   = [];
     let alltotal = 0;
 // urlを取得//
     href = location.href
+    calendarPieChart(howmuch, howmuches, labels, data, alltotal, myChart)
 
-// 配列を定義 名前と金額をぶちこんで行く//
-    
-
-    function shuffle(backgroundColor) {
-      var n = backgroundColor.length, t, i;
-    
-      while (n) {
-        i = Math.floor(Math.random() * n--);
-        t = backgroundColor[n];
-        backgroundColor[n] = backgroundColor[i];
-        backgroundColor[i] = t;
-      }
-    
-      return backgroundColor;
-    }
-
-
-    if (href.includes('details') && href.includes('members')){
-      
-  //daysのページ//////////////////////////////////////////
-    } else if (href.includes('days')){
-      i = 1
-      while (i <= 10){
-        let result = howmuches.filter(function(x){
-          return x.detail_id == i
-        })
-        total = 0
-        result.map(x => x).forEach(function(x){
-          total += x.money
-          howmuch.forEach(function(e){
-            if (e.id == x.detail_id){
-              if (labels.indexOf(e.name) == -1) {
-                array.push(e);
-                labels.push(e.name);
-              }
-            }
-          })
-        })
-        if(total != 0){
-          data.push(total)
-          alltotal += total
-        }
-        i += 1
-      }
-      html = `<p>${alltotal.toLocaleString()}円</p>`
-      $('.container').append(html)
-      
-      
-      
-  //monthsのページ//////////////////////////////////////////
-    } else if (href.includes('months')){
-      i = 1
-      while (i <= 10){
-        let result = howmuches.filter(function(x){
-          return x.detail_id == i
-        })
-        total = 0
-        result.map(x => x).forEach(function(x){
-          total += x.money
-          howmuch.forEach(function(e){
-            if (e.id == x.detail_id){
-              if (labels.indexOf(e.name) == -1) {
-                array.push(e);
-                labels.push(e.name);
-              }
-            }
-          })
-        })
-        if(total != 0){
-          data.push(total)
-          alltotal += total
-        }
-        i += 1
-      }
-      html = `<p>${alltotal.toLocaleString()}円</p>`
-      $('p').remove()
-      $('.container').append(html)
-      
-      
-      
-      //details2のページ//////////////////////////////////////////
-    } else if (href.includes('details2')){
-      i = 1
-      while (i <= 10){
-        let result = howmuches.filter(function(x){
-          return x.member_id == i
-        })
-        total = 0
-        result.map(x => x).forEach(function(x){
-          total += x.money
-          howmuch.forEach(function(e){
-            if (e.id == x.member_id){
-              if (labels.indexOf(e.name) == -1) {
-                array.push(e);
-                labels.push(e.name);
-                document.getElementById("myChart").onclick = function(evt){   
-                  var activePoints = myChart.getElementsAtEvent(evt);
-                  if(activePoints.length > 0){
-                    var clickedElementindex = activePoints[0]["_index"];
-                      location.href = "/members/" + array[clickedElementindex].id
-                  }
-                }
-              }
-            }
-          })
-        })
-        if(total != 0){
-          data.push(total)
-          alltotal += total
-        }
-        i += 1
-      }
-      html = `<p>${alltotal.toLocaleString()}円</p>`
-      $('.container').append(html)
-      
-      
-      
-  // categories2のページ/////////////////////////////
-    } else if (href.includes('categories2')){
-      i = 1
-      while (i <= 10){
-        let result = howmuches.filter(function(x){
-          return x.category_id == i
-        })
-
-        total = 0
-        result.map(x => x).forEach(function(x){
-          total += x.money
-
-          howmuch.forEach(function(e){
-            if (e.id == x.category_id){
-              if (labels.indexOf(e.name) == -1) {
-                array.push(e);
-                labels.push(e.name);
-                document.getElementById("myChart").onclick = function(evt){   
-                  var activePoints = myChart.getElementsAtEvent(evt);
-                  if(activePoints.length > 0){
-                    var clickedElementindex = activePoints[0]["_index"];
-                      location.href = href + "/" + array[clickedElementindex].id + "/details2"
-                  }
-                }
-              }
-            }
-          })
-        })
-        if(total != 0){
-          data.push(total)
-          alltotal += total
-        }
-        i += 1
-      }
-      html = `<p>${alltotal.toLocaleString()}円</p>`
-      $('.container').append(html)
-      
-      
-      
-  // categoriesのページ/////////////////////////////
-    } else if (href.includes('categories')){
-      i = 1
-      while (i <= 10){
-        let result = howmuches.filter(function(x){
-          return x.detail_id == i
-        })
-
-        total = 0
-        result.map(x => x).forEach(function(x){
-          total += x.money
-
-          howmuch.forEach(function(e){
-            if (e.id == x.detail_id){
-              if (labels.indexOf(e.name) == -1) {
-                array.push(e);
-                labels.push(e.name);
-                document.getElementById("myChart").onclick = function(evt){   
-                  var activePoints = myChart.getElementsAtEvent(evt);
-                  if(activePoints.length > 0){
-                    var clickedElementindex = activePoints[0]["_index"];
-                      location.href = href + "/details/" + array[clickedElementindex].id
-                  }
-                }
-              }
-            }
-          })
-        })
-        if(total != 0){
-          data.push(total)
-          alltotal += total
-        }
-        i += 1
-      }
-      html = `<p>${alltotal.toLocaleString()}円</p>`
-      $('.container').append(html)
-      
-      
-      
-      
-  // membersのページ///////////////////////////////
-    } else if (href.includes('members')) {
-      i = 1
-      while (i <= 10){
-        let result = howmuches.filter(function(x){
-          return x.category_id == i
-        })
-
-        total = 0
-        result.map(x => x).forEach(function(x){
-          total += x.money
-
-          howmuch.forEach(function(e){
-            if (e.id == x.category_id){
-              if (labels.indexOf(e.name) == -1) {
-                array.push(e);
-                labels.push(e.name);
-                document.getElementById("myChart").onclick = function(evt){   
-                  var activePoints = myChart.getElementsAtEvent(evt);
-                  if(activePoints.length > 0){
-                    var clickedElementindex = activePoints[0]["_index"];
-                    location.href = href + "/categories/" + array[clickedElementindex].id
-                  }
-                }
-              }
-            }
-          })
-        })
-        if(total != 0){
-          data.push(total)
-          alltotal += total
-        }
-        i += 1
-      }
-      html = `<p>${alltotal.toLocaleString()}円</p>`
-      $('.container').append(html)
-
-
-  // インデックスページ//////////////////////////
-    }else {
-  // detail_idにおいて1から順に//
-      i = 1
-      while (i <= 10){
-  // 配列をdetail_id別に作り直す//
-        let result = howmuches.filter(function(x){
-          return x.member_id == i
-        })
-
-  // 合計をさっき作った配列ごとに求める//
-        total = 0
-        result.map(x => x).forEach(function(x){
-          total += x.money
-
-  // 0のやつはラベル表示しないようにする//
-          howmuch.forEach(function(e){
-            if (e.id == x.member_id){
-              if (labels.indexOf(e.name) == -1) {
-                array.push(e);
-                labels.push(e.name);
-  // クリックしたところにリンクを付ける//
-                document.getElementById("myChart").onclick = function(evt){   
-                  var activePoints = myChart.getElementsAtEvent(evt);
-                  if(activePoints.length > 0){
-                    var clickedElementindex = activePoints[0]["_index"];
-                    location.href = href + "/members/" + array[clickedElementindex].id
-                  }
-                }
-              }
-            }
-          })
-        })
-  // 合計ブち込む//
-        if(total != 0){
-          data.push(total)
-          alltotal += total
-        }
-        i += 1
-      }
-      html = `<p>${alltotal.toLocaleString()}円</p>`
-      $('.container').append(html)
-    }
 
 
 
 
   // detailページでのコンソールerror消す//////////////////
-    if (!(href.includes('details')　&& href.includes('members'))){
+    if (!(href.includes('details') && href.includes('members'))){
       // 円グラフ//
       var ctx = document.getElementById("myChart").getContext('2d');
       var myChart = new Chart(ctx, {
@@ -391,6 +173,24 @@ document.addEventListener("turbolinks:load", function() {
         }
       })
       // 円グラフ//
+    }
+// リンク付与///////
+    document.getElementById("myChart").onclick = function(evt){
+      var activePoints = myChart.getElementsAtEvent(evt);
+      if(activePoints.length > 0){
+        var clickedElementindex = activePoints[0]["_index"];
+        if (href.includes('details2')){
+          location.href = "/members/" + array[clickedElementindex].id
+        } else if (href.includes('categories2')){
+          location.href = href + "/" + array[clickedElementindex].id + "/details2"
+        } else if (href.includes('members')&&!href.includes('categories')){
+          location.href = href + "/categories/" + array[clickedElementindex].id
+        } else if (href.includes('categories')){
+          location.href = href + "/details/" + array[clickedElementindex].id
+        } else{
+          location.href = href + "/members/" + array[clickedElementindex].id
+        }
+      }
     }
   }
   buildPieChart(howmuch, howmuches)
