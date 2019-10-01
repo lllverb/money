@@ -4,6 +4,7 @@
       %th 項目
       %th 値段
       %th 場所
+      %th 日時
     - @howmuches.each do |howmuch|
       %tr
         %td 
@@ -12,8 +13,10 @@
           = howmuch.money.to_s(:delimited)
         %td 
           = howmuch.where
+        %td
+          = howmuch.when
   .form
-    = form_for [@member, @category, @detail, @howmuch] do |f|
+    = form_for [@year, @month, @member, @category, @detail, @howmuch] do |f|
       .howmuch-form
         = f.text_field :name, placeholder: "項目"
         = f.text_field :money, placeholder: "値段"

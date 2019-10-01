@@ -1,7 +1,12 @@
 - @categories.each do |category|
-  = link_to "#{category.name}", member_category_path(params[:id], category)
+  = link_to "#{category.name}", year_month_member_category_path(params[:year_id], params[:month_id], params[:id], category)
+
 
 .container
-  %h2 Chart.js
-  %div
+  %h1 
+    = @member[0].name
+  .myChart
     %canvas#myChart
+#calendar
+%input{name:"theyear", type: "hidden", value: @theyear , class: "theyear"}
+%input{name:"themonth", type: "hidden", value: @themonth , class: "themonth"}

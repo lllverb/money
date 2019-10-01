@@ -1,11 +1,13 @@
 .members
   - @members.each do |member|
-    = link_to "#{member.name}", member_path(member.id)
+    = link_to "#{member.name}", year_month_member_path(Date.today.year, Date.today.month, member.id)
 
 .container
-  %h1 Chart.js
-  %div
+  %h1 メンバー別
+  .myChart
     %canvas#myChart
 
-= link_to "カテゴリ別ページへ", categories2_index_path
-= link_to "月別ページへ", year_month_path(Date.today.year, Date.today.month)
+= link_to "月別ページへ", root_path
+#calendar
+%input{name:"theyear", type: "hidden", value: @theyear , class: "theyear"}
+%input{name:"themonth", type: "hidden", value: @themonth , class: "themonth"}

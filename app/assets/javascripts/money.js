@@ -1,9 +1,10 @@
 document.addEventListener("turbolinks:load", function() {
   // なんかいるやつ//
   history.replaceState(null, document.getElementsByTagName('title')[0].innerHTML, null);
-  window.addEventListener('popstate', function(e) {
+    window.addEventListener('popstate', function(e) {
     window.location.reload();
   });
+
 //何も入力していない時押せないようにする。
   $('#new_howmuch').submit(function() {
     if ($.trim($("#howmuch_name").val()) === "" || $.trim($("#howmuch_money").val()) === ""|| $.trim($("#howmuch_where").val()) === ""|| $.trim($("#created_at").val()) === "") {
@@ -11,11 +12,9 @@ document.addEventListener("turbolinks:load", function() {
         return false;
     }
   });
-  var howmuch = gon.howmuch
-  var howmuches = gon.howmuches
+  
 
-  const ctx = document.getElementById("myChart").getContext('2d');
-  const array    = []
+  
   const backgroundColor = [
     "#CCFFFF", "#99FFFF", "#66FFFF", "#33FFFF", "#00FFFF", 
     "#FFFFCC", "#CCFFCC", "#99FFCC", "#66FFCC", "#33FFCC", "#00FFCC",
@@ -55,12 +54,54 @@ document.addEventListener("turbolinks:load", function() {
     "#FF0000", "#CC0000", "#990000", "#660000", "#330000"
   ]
 
+// 投稿フォームへ
+  $(function() {
+    var children = $('.children');
+    var original = children.html();
+  
+    $('.parent').change(function() {
+      var val1 = $(this).val();
+      children.html(original).find('option').each(function() {
+        var val2 = $(this).data('val');
+        if (val1 != val2) {
+          $(this).not('optgroup,.msg').remove();
+        }
+      });
+      if ($(this).val() === '') {
+        children.attr('disabled', 'disabled');
+      } else {
+        children.removeAttr('disabled');
+      }
+    });
+  });
+  $('#toformbutton').on('click', function(e){
+    e.preventDefault();
+    if ($.trim($("#selectcategory").val()) === "") {
+      alert('全項目入力してください');
+      return false;
+  }
+    var month = $('h2')[0].innerText.replace('年', '').replace('月', '').split(' ')
+    location.href = "/years/" + month[0] + "/months/" + month[1] + "/members/" + $('#selectmember').val() + "/categories/" + $('#selectcategory').val() + "/details/" + $('#selectdetail').val()
+  })
+  // 投稿フォームへ
+
+  
+  
+
   $('.fc-button').on('click', function(e){
     e.preventDefault();
-    const month = $('h2')[0].innerText.replace('年', '').replace('月', '').split(' ')
-    href = '/years/' + month[0] + '/months/' + month[1]
+    var month = $('h2')[0].innerText.replace('年', '').replace('月', '').split(' ')
+    if (href.includes('months')){
+      var nowhref = location.href;
+      newhref = nowhref.split('/');
+      newhref.splice(4, 1, month[0]);
+      newhref.splice(6, 1, month[1]);
+      var url = newhref.join('/');
+    } else {
+      var url = '/years/' + month[0] + '/months/' + month[1]
+    }
     $.ajax({
-      url: href,
+      url: url,
       type: 'GET',
       dataType: 'json',
       })
@@ -99,31 +140,34 @@ document.addEventListener("turbolinks:load", function() {
     return backgroundColor;
   }
 
-  function calendarPieChart(howmuch, howmuches, labels, data, alltotal, myChart){
-    
+  function buildPieChartDetail(howmuch, howmuches, array, labels, data, alltotal, myChart){
     i = 1
     while (i <= 10){
       let result = howmuches.filter(function(x){
-        if(href.includes('details2')){
-          return x.member_id  == i
-        } else if(href.includes('categories2')||href.includes('members')){
-          return x.category_id  == i
-        } else if (href.includes('categories')||href.includes('days')||href.includes('month')){
-          return x.detail_id  == i
-        } else {
+        if(href.includes('years/')&&href.includes('months/')&&href.includes('members/')&&href.includes('categories/')){
+          return x.detail_id == i
+        } else if (href.includes('years/')&&href.includes('months/')&&href.includes('members/')){
+          return x.category_id == i
+        } else if (href.includes('years/')&&href.includes('months/')&&href.includes('members')){
           return x.member_id == i
+        } else if (href.includes('years/')&&href.includes('months/')&&href.includes('categories2')&&href.includes('details2')){
+          return x.member_id == i
+        } else {
+          return x.category_id == i
         }
       })
       total = 0
       result.map(x => x).forEach(function(x){
-        if(href.includes('details2')){
-          var id = x.member_id
-        } else if(href.includes('categories2')||href.includes('members')){
-          var id = x.category_id
-        } else if (href.includes('categories')||href.includes('days')|| href.includes('months')){
+        if(href.includes('years/')&&href.includes('months/')&&href.includes('members/')&&href.includes('categories/')){
           var id = x.detail_id
-        } else {
+        } else if (href.includes('years')&&href.includes('months')&&href.includes('members/')){
+          var id = x.category_id
+        } else if (href.includes('years')&&href.includes('months')&&href.includes('members')){
           var id = x.member_id
+        } else if (href.includes('years')&&href.includes('months')&&href.includes('categories2')&&href.includes('details2')){
+          var id = x.member_id
+        } else {
+          var id = x.category_id
         }
         total += x.money
         howmuch.forEach(function(e){
@@ -150,9 +194,10 @@ document.addEventListener("turbolinks:load", function() {
     const labels = [];
     const data   = [];
     let alltotal = 0;
+    var array    = []
 // urlを取得//
     href = location.href
-    calendarPieChart(howmuch, howmuches, labels, data, alltotal, myChart)
+    buildPieChartDetail(howmuch, howmuches, array, labels, data, alltotal, myChart)
 
 
 
@@ -176,22 +221,27 @@ document.addEventListener("turbolinks:load", function() {
     }
 // リンク付与///////
     document.getElementById("myChart").onclick = function(evt){
-      var activePoints = myChart.getElementsAtEvent(evt);
+      const activePoints = myChart.getElementsAtEvent(evt);
+      var month = $('h2')[0].innerText.replace('年', '').replace('月', '').split(' ')
       if(activePoints.length > 0){
         var clickedElementindex = activePoints[0]["_index"];
-        if (href.includes('details2')){
-          location.href = "/members/" + array[clickedElementindex].id
-        } else if (href.includes('categories2')){
-          location.href = href + "/" + array[clickedElementindex].id + "/details2"
-        } else if (href.includes('members')&&!href.includes('categories')){
-          location.href = href + "/categories/" + array[clickedElementindex].id
-        } else if (href.includes('categories')){
+        if (href.includes('years/')&&href.includes('months/')&&href.includes('members/')&&href.includes('categories/')){
           location.href = href + "/details/" + array[clickedElementindex].id
-        } else{
-          location.href = href + "/members/" + array[clickedElementindex].id
+        } else if (href.includes('years/')&&href.includes('months/')&&href.includes('members/')){
+          location.href = href + "/categories/" + array[clickedElementindex].id
+        } else if(href.includes('years')&&href.includes('months')&&href.includes('members')){
+          location.href = "/years/" + month[0] + "/months/" + month[1] + "/members/" + array[clickedElementindex].id
+        } else if(href.includes('years')&&href.includes('months')&&href.includes('categories2')&&href.includes('details2')){
+          location.href = "/years/" + month[0] + "/months/" + month[1] + "/members/" + array[clickedElementindex].id + "/categories/" + $('.category').val()
+        } else { //root
+          location.href = href + "years/" + month[0] + "/months/" + month[1] + "/categories2/" + array[clickedElementindex].id + "/details2"
         }
       }
     }
   }
-  buildPieChart(howmuch, howmuches)
+  if (!location.href.includes('/details/')){
+    var howmuch = gon.howmuch
+    var howmuches = gon.howmuches
+    buildPieChart(howmuch, howmuches)
+  }
 })

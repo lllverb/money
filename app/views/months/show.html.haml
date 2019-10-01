@@ -1,8 +1,32 @@
 .container
-  %h1 Chart.js
-  %div{class: "myChart"}
+  %h1 月別
+  .myChart
     %canvas#myChart
+= link_to "メンバー別ページへ", year_month_members_path(Date.today.year, Date.today.month)
+
+.toform
+  %select#selectmember
+    - @members.each do |member|
+      %option{value: member.id} 
+        = member.name
+  %select#selectcategory.parent{required: ""}
+    %option{value: ""}
+      カテゴリを選ぶ
+    - @categories.each do |category|
+      %option{value: category.id} 
+        = category.name
+  %select#selectdetail.children{disabled: "disabled", required: ""}
+    %option{value: ""}
+      詳細を選ぶ
+    - @details.each do |detail|
+      %option{"data-val" => detail.category_id, value: detail.id} 
+        = detail.name
+  %button#toformbutton
+    登録画面へ
+  
 #calendar
 
 - @howmuches.each do |howmuch|
   %input{name:"howmuches", type: "hidden", value: howmuch.money , class: "howmuches"}
+%input{name:"theyear", type: "hidden", value: @theyear , class: "theyear"}
+%input{name:"themonth", type: "hidden", value: @themonth , class: "themonth"}

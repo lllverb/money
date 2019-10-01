@@ -1,4 +1,10 @@
 .container
-  %h2 Chart.js
-  %div
+  %h1
+  = @category[0].name
+  .myChart
     %canvas#myChart
+
+#calendar
+%input{name:"category", type: "hidden", value: @category[0].id , class: "category"}
+%input{name:"theyear", type: "hidden", value: @theyear , class: "theyear"}
+%input{name:"themonth", type: "hidden", value: @themonth , class: "themonth"}
