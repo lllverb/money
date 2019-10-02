@@ -1,9 +1,5 @@
 class MonthsController < ApplicationController
   def show
-    @members = Member.all
-    @categories = Category.all
-    @details = Detail.all
-
     gon.howmuch = Category.all
     gon.howmuches = Howmuch.where(when: Time.local(Date.today.year, Date.today.month).all_month)
 

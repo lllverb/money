@@ -1,7 +1,6 @@
 class MembersController < ApplicationController
 
   def index
-    @members = Member.all
     gon.howmuch = Member.all
     gon.howmuches = Howmuch.where(when: Time.local(params[:year_id], params[:month_id]).all_month)
 

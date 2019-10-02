@@ -5,7 +5,8 @@ class DetailsController < ApplicationController
   def show
     @howmuch   = Howmuch.new
     @howmuches = Howmuch.where(when: Time.local(params[:year_id], params[:month_id]).all_month).where(member_id: params[:member_id]).where(detail_id: params[:id])
-    
+    @theyear = params[:year_id]
+    @themonth = params[:month_id]
     respond_to do |format|
       format.html
       format.json

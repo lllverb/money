@@ -11,5 +11,7 @@
     %script{src: "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"}
 
   %body
-  = link_to "トップに戻る", root_path unless request.url == root_url
+  = link_to "Z∀IW", root_path, class: "title"
   = yield
+  %input{name:"theyear", type: "hidden", value: @theyear , class: "theyear hidden"}
+  %input{name:"themonth", type: "hidden", value: @themonth , class: "themonth hidden"}

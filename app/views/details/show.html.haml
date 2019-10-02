@@ -1,31 +1,34 @@
+#calendar
 .container
-  %table{border: 1}
-    %tr
-      %th 項目
-      %th 値段
-      %th 場所
-      %th 日時
-    - @howmuches.each do |howmuch|
-      %tr
-        %td 
-          = howmuch.name
-        %td 
-          = howmuch.money.to_s(:delimited)
-        %td 
-          = howmuch.where
-        %td
-          = howmuch.when
-  .form
-    = form_for [@year, @month, @member, @category, @detail, @howmuch] do |f|
-      .howmuch-form
-        = f.text_field :name, placeholder: "項目"
-        = f.text_field :money, placeholder: "値段"
-        = f.text_field :where, placeholder: "場所"
+  .detail
+    .howmuchlist
+      %table.howmuchtable{border: 1}
+        %tr
+          %th.thdetail 項目
+          %th.thmoney 値段 
+          %th.thwhere 場所
+          %th.thwhen 日時
+        - @howmuches.each do |howmuch|
+          %tr
+            %td 
+              = howmuch.name
+            %td 
+              = howmuch.money.to_s(:delimited) + "円"
+            %td 
+              = howmuch.where
+            %td
+              = howmuch.when
+    .form
+      = form_for [@year, @month, @member, @category, @detail, @howmuch] do |f|
+        .howmuch-form
+          = f.text_field :name, placeholder: "項目"
+          = f.text_field :money, placeholder: "値段"
+          = f.text_field :where, placeholder: "場所"
 
 
-      .input-group{"data-target-input" => "nearest"}
-        = f.text_field :when, id: "created_at", class: "form-control datepicker", data: { target: '#created_at'}
-        .input-group-append{"data-target" => "#created_at", "data-toggle" => "datetimepicker"}
-          .input-group-text
-            %i.fa.fa-calendar
-      = f.submit value: "登録する"
+        .input-group{"data-target-input" => "nearest"}
+          = f.text_field :when, id: "created_at", class: "form-control datepicker", data: { target: '#created_at'}
+          .input-group-append{"data-target" => "#created_at", "data-toggle" => "datetimepicker"}
+            .input-group-text
+              %i.fa.fa-calendar
+        = f.submit value: "登録する"

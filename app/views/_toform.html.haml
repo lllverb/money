@@ -1,0 +1,23 @@
+.toform
+  %select#selectmember
+    - @members.each do |member|
+      %option{value: member.id} 
+        = member.name
+  %select#selectcategory.parent{required: ""}
+    %option{value: ""}
+      カテゴリを選ぶ
+    - @categories.each do |category|
+      %option{value: category.id} 
+        = category.name
+  %select#selectdetail.children{disabled: "disabled", required: ""}
+    %option{value: ""}
+      詳細を選ぶ
+    - @details.each do |detail|
+      %option{"data-val" => detail.category_id, value: detail.id} 
+        = detail.name
+  %button#toformbutton
+    登録画面へ
+  = link_to "メンバー別ページへ", year_month_members_path(Date.today.year, Date.today.month), class: "tomemberspage"
+  %br
+  = link_to "カテゴリ別ページへ", root_path, class: "tomonthspage"
+

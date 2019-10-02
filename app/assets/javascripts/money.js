@@ -5,6 +5,8 @@ document.addEventListener("turbolinks:load", function() {
     window.location.reload();
   });
 
+
+
 //何も入力していない時押せないようにする。
   $('#new_howmuch').submit(function() {
     if ($.trim($("#howmuch_name").val()) === "" || $.trim($("#howmuch_money").val()) === ""|| $.trim($("#howmuch_where").val()) === ""|| $.trim($("#created_at").val()) === "") {
@@ -74,6 +76,7 @@ document.addEventListener("turbolinks:load", function() {
       }
     });
   });
+
   $('#toformbutton').on('click', function(e){
     e.preventDefault();
     if ($.trim($("#selectcategory").val()) === "") {
@@ -87,9 +90,10 @@ document.addEventListener("turbolinks:load", function() {
 
   
   
-
+// カレンダーめくる時//
   $('.fc-button').on('click', function(e){
     e.preventDefault();
+    href = location.href
     var month = $('h2')[0].innerText.replace('年', '').replace('月', '').split(' ')
     if (href.includes('months')){
       var nowhref = location.href;
@@ -103,11 +107,12 @@ document.addEventListener("turbolinks:load", function() {
     $.ajax({
       url: url,
       type: 'GET',
+      cache: false,
       dataType: 'json',
       })
       .done(function(data){
         $('.howmuches').each(function(e, x){
-          $('input').remove();
+          $('.hidden').remove();
         })
         const newArray = []
         data.forEach(function(e){
@@ -115,11 +120,21 @@ document.addEventListener("turbolinks:load", function() {
           buildHTML(e.money)
         })
         resetCanvas();
-        buildPieChart(howmuch, newArray)
+        if (href.includes('details/')){
+          $('.howmuchtable').remove()
+          buildTableHTML(e)
+          data.forEach(function(e){
+            buildTableInner(e)
+          })
+        } else {
+          buildPieChart(howmuch, newArray)
+        }
       })
     })
 
-    function resetCanvas() {
+
+    
+  function resetCanvas() {
     $('#myChart').remove();
     $('.myChart').append("<canvas id='myChart'></canvas>");
   }
@@ -127,6 +142,36 @@ document.addEventListener("turbolinks:load", function() {
   function buildHTML(data){
     html = `<input class='howmuches' name='howmuches' type='hidden' value='${data}'>`
     $('body').append(html)
+  }
+
+  function buildTableHTML(e){
+    upperhtml = `<table border='1' class='howmuchtable'>
+                  <tr>
+                    <th class='thdetail'>項目</th>
+                    <th class='thmoney'>値段</th>
+                    <th class='thwhere'>場所</th>
+                    <th class='thwhen'>日時</th>
+                  </tr>
+                </table>`
+    $('.howmuchlist').append(upperhtml)
+  }
+
+  function buildTableInner(e){
+    lowerhtml = `<tr>
+                  <td>
+                    ${e.name}
+                  </td>
+                  <td>
+                    ${e.money.toLocaleString()}円
+                  </td>
+                  <td>
+                    ${e.where}
+                  </td>
+                  <td>
+                    ${e.when}
+                  </td>
+                </tr>`
+    $('.howmuchtable').append(lowerhtml)
   }
 
   function shuffle(backgroundColor) {
@@ -140,8 +185,9 @@ document.addEventListener("turbolinks:load", function() {
     return backgroundColor;
   }
 
-  function buildPieChartDetail(howmuch, howmuches, array, labels, data, alltotal, myChart){
+  function buildPieChartDetail(howmuch, howmuches, ids, labels, data, alltotal){
     i = 1
+    // 〜idごとに分別//
     while (i <= 10){
       let result = howmuches.filter(function(x){
         if(href.includes('years/')&&href.includes('months/')&&href.includes('members/')&&href.includes('categories/')){
@@ -155,8 +201,9 @@ document.addEventListener("turbolinks:load", function() {
         } else {
           return x.category_id == i
         }
-      })
+      })//resultというそれぞれのid別に別れた配列を作成。
       total = 0
+      // resultの中身をひとつひとつ見ていく
       result.map(x => x).forEach(function(x){
         if(href.includes('years/')&&href.includes('months/')&&href.includes('members/')&&href.includes('categories/')){
           var id = x.detail_id
@@ -170,13 +217,13 @@ document.addEventListener("turbolinks:load", function() {
           var id = x.category_id
         }
         total += x.money
+        // howmuch(ラベル)のidとresultのidを見比べる
+        //indexOf == -1はなかったら追加する。
         howmuch.forEach(function(e){
-          if (e.id == id){
-            if (labels.indexOf(e.name) == -1) {
-              array.push(e);
+          if (e.id == id && labels.indexOf(e.name) == -1) {
+              ids.push(e.id);
               labels.push(e.name);
             }
-          }
         })
       })
       if(total != 0){
@@ -185,40 +232,33 @@ document.addEventListener("turbolinks:load", function() {
       }
       i += 1
     }
+
     html = `<p>${alltotal.toLocaleString()}円</p>`
     $('p').remove()
-    $('.container').append(html)
+    $('.myChart').append(html)
   }
 
   function buildPieChart(howmuch, howmuches){
     const labels = [];
     const data   = [];
     let alltotal = 0;
-    var array    = []
-// urlを取得//
+    var ids    = []
     href = location.href
-    buildPieChartDetail(howmuch, howmuches, array, labels, data, alltotal, myChart)
+    buildPieChartDetail(howmuch, howmuches, ids, labels, data, alltotal)
 
-
-
-
-
-  // detailページでのコンソールerror消す//////////////////
-    if (!(href.includes('details') && href.includes('members'))){
       // 円グラフ//
-      var ctx = document.getElementById("myChart").getContext('2d');
-      var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-          labels: labels,
-          datasets: [{
-            backgroundColor: shuffle(backgroundColor),
-            data: data,
-          }]
-        }
-      })
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: labels,
+        datasets: [{
+          backgroundColor: shuffle(backgroundColor),
+          data: data,
+        }]
+      }
+    })
       // 円グラフ//
-    }
 // リンク付与///////
     document.getElementById("myChart").onclick = function(evt){
       const activePoints = myChart.getElementsAtEvent(evt);
@@ -226,15 +266,15 @@ document.addEventListener("turbolinks:load", function() {
       if(activePoints.length > 0){
         var clickedElementindex = activePoints[0]["_index"];
         if (href.includes('years/')&&href.includes('months/')&&href.includes('members/')&&href.includes('categories/')){
-          location.href = href + "/details/" + array[clickedElementindex].id
+          location.href = href + "/details/" + ids[clickedElementindex]
         } else if (href.includes('years/')&&href.includes('months/')&&href.includes('members/')){
-          location.href = href + "/categories/" + array[clickedElementindex].id
+          location.href = href + "/categories/" + ids[clickedElementindex]
         } else if(href.includes('years')&&href.includes('months')&&href.includes('members')){
-          location.href = "/years/" + month[0] + "/months/" + month[1] + "/members/" + array[clickedElementindex].id
+          location.href = "/years/" + month[0] + "/months/" + month[1] + "/members/" + ids[clickedElementindex]
         } else if(href.includes('years')&&href.includes('months')&&href.includes('categories2')&&href.includes('details2')){
-          location.href = "/years/" + month[0] + "/months/" + month[1] + "/members/" + array[clickedElementindex].id + "/categories/" + $('.category').val()
+          location.href = "/years/" + month[0] + "/months/" + month[1] + "/members/" + ids[clickedElementindex] + "/categories/" + $('.category').val()
         } else { //root
-          location.href = href + "years/" + month[0] + "/months/" + month[1] + "/categories2/" + array[clickedElementindex].id + "/details2"
+          location.href = href + "years/" + month[0] + "/months/" + month[1] + "/categories2/" + ids[clickedElementindex] + "/details2"
         }
       }
     }

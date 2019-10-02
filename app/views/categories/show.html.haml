@@ -1,11 +1,6 @@
-- @details.each do |detail|
-  = link_to "#{detail.name}", year_month_member_category_detail_path(params[:year_id], params[:month_id], params[:member_id], params[:id], detail)
-
+#calendar
 .container
   %h1 
-  = @member[0].name
-  .myChart
-    %canvas#myChart
-#calendar
-%input{name:"theyear", type: "hidden", value: @theyear , class: "theyear"}
-%input{name:"themonth", type: "hidden", value: @themonth , class: "themonth"}
+    = @member[0].name
+  = render './myChart'
+  = render './toform'
