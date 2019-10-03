@@ -2,7 +2,7 @@ class HowmuchesController < ApplicationController
   def create
     @howmuch = Howmuch.new(howmuch_params)
     if @howmuch.save
-      redirect_to year_month_member_category_detail_path(year_id: params[:year_id], month_id: params[:month_id], id: params[:detail_id])
+      redirect_to year_month_member_category_detail_path(year_id: Date.today.year, month_id: Date.today.month, id: params[:detail_id])
     else
     end
   end

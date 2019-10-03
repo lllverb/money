@@ -188,7 +188,7 @@ document.addEventListener("turbolinks:load", function() {
   function buildPieChartDetail(howmuch, howmuches, ids, labels, data, alltotal){
     i = 1
     // 〜idごとに分別//
-    while (i <= 10){
+    while (i <= 14){
       let result = howmuches.filter(function(x){
         if(href.includes('years/')&&href.includes('months/')&&href.includes('members/')&&href.includes('categories/')){
           return x.detail_id == i
