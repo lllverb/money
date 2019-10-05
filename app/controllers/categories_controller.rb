@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
   def show
     @member = Member.where(id: params[:member_id])
-    @details = Detail.where(category_id: params[:id])
+    @details = Detail.all
     gon.howmuch   = Detail.all
     gon.howmuches = Howmuch.where(when: Time.local(params[:year_id], params[:month_id]).all_month).where(member_id: params[:member_id]).where(category_id: params[:id])
     
