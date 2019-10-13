@@ -5,6 +5,9 @@
       %h2 新規登録
     .devise-container__lower
       .devise-container__lower--inner
+        .nickname.form
+          ニックネーム
+          = f.text_field :nickname, placeholder: "ニックネーム", class: "block"
         .email.form
           Email
           = f.email_field :email, placeholder: "メールアドレス", class: "block"
