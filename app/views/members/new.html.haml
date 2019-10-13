@@ -1,0 +1,12 @@
+.devise-container
+  = form_for @member do |f|
+    .devise-container__upper
+      %h2 メンバーを追加する
+    .devise-container__lower
+      .devise-container__lower--inner
+        .email.form
+          名前
+          = f.text_field :name, placeholder: "名前を入力してください", class:"block"
+          = f.text_field :name, type: "hidden", value: current_user.id
+        .form
+          = f.submit "メンバーを追加", class: "button block"

@@ -1,13 +1,19 @@
 .devise-container{
   width: 60%;
-  margin: 0 auto;
+  max-width: 500px;
+  margin: 40px auto;
   background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   &__upper{
     text-align: center;
     border-bottom: 3px solid rgba(252, 250, 250, 0.9);
+    height: 50px;
+    h2{
+      line-height: 50px;
+    }
   }
   &__lower{
-    padding-bottom: 80px;
+    padding-bottom: 40px;
     &--inner{
       width: 80%;
       margin: 0 auto;
@@ -16,12 +22,26 @@
         width: 100%;
         height: 50px;
         padding-left: 10px;
+        &:focus{
+          outline: 0;
+          border: 1px solid skyblue;
+        }
       }
       .form{
         padding-top: 30px;
       }
       .button{
+        font-size: 24px;
         background-color: rgb(255, 247, 222);
+      }
+      .to-other-form{
+        display: block;
+        width: 40%;
+        margin: 40px auto;
+        text-align: center;
+        background-color: rgb(255, 247, 222);
+        border: 1px solid #f0f0f0;
+        color: black;
       }
     }
   }

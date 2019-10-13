@@ -27,4 +27,22 @@ class MembersController < ApplicationController
       format.json
     end
   end
+
+  def new
+    @member = Member.new
+  end
+
+  def create
+    @member = Member.new(member_params)
+    if @member.save
+      redirect_to root_path, notice: '完了'
+    else
+      render :new
+    end
+  end
+
+  private
+  def member_params
+    params.require(:member).permit(:name)
+  end
 end
