@@ -10,6 +10,7 @@
           %th.thmoney 値段 
           %th.thwhere 場所
           %th.thwhen 日時
+          %th.thdelete
         - @howmuches.each do |howmuch|
           %tr
             %td 
@@ -20,12 +21,15 @@
               = howmuch.where
             %td
               = howmuch.when
+            %td
+              = link_to "削除", year_month_member_category_detail_howmuch_path(detail_id: params[:id], id: howmuch.id), method: :delete
     .form
       = form_for [@year, @month, @member, @category, @detail, @howmuch], url:year_month_member_category_detail_howmuches_path(detail_id: params[:id]) do |f|
         .howmuch-form
           = f.text_field :name, placeholder: "項目"
           = f.text_field :money, placeholder: "値段"
           = f.text_field :where, placeholder: "場所"
+          = f.text_field :user_id, type: "hidden", value: current_user.id
 
 
         .input-group{"data-target-input" => "nearest"}

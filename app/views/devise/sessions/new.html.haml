@@ -1,9 +1,7 @@
-
-= render "devise/shared/links"
 .devise-container
   = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
     .devise-container__upper
-      %h2 Log in
+      %h2 ログイン
     .devise-container__lower
       .devise-container__lower--inner
         .email.form
@@ -11,7 +9,8 @@
           = f.email_field :email, placeholder: "メールアドレス", class: "block"
         .password.form
           Password
-          = f.password_field :email, placeholder: "7文字以上", class: "block"
+          = f.password_field :password, placeholder: "7文字以上", class: "block"
         .form
-          = f.submit "Log In", class: "button block"
-
+          = f.submit "ログイン", class: "button block"
+        = link_to "新規登録はこちら", new_user_registration_path, class: "to-other-form"
+        

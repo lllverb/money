@@ -42,8 +42,6 @@ document.addEventListener("turbolinks:load", function() {
     window.addEventListener('popstate', function(e) {
     window.location.reload();
   });
-
-
 // カレンダーめくる時//
   $('.fc-button').on('click', function(e){
     e.preventDefault();
@@ -85,19 +83,14 @@ document.addEventListener("turbolinks:load", function() {
         }
       })
     })
-
-
-    
   function resetCanvas() {
     $('#myChart').remove();
     $('.myChart').append("<canvas id='myChart'></canvas>");
   }
-
   function buildHTML(data){
     html = `<input class='howmuches' name='howmuches' type='hidden' value='${data}'>`
     $('body').append(html)
   }
-
   function buildTableHTML(e){
     upperhtml = `<table border='1' class='howmuchtable'>
                   <tr>
@@ -109,7 +102,6 @@ document.addEventListener("turbolinks:load", function() {
                 </table>`
     $('.howmuchlist').append(upperhtml)
   }
-
   function buildTableDetails(e){
     lowerhtml = `<tr>
                   <td>
@@ -127,7 +119,6 @@ document.addEventListener("turbolinks:load", function() {
                 </tr>`
     $('.howmuchtable').append(lowerhtml)
   }
-
   function shuffle(backgroundColor) {
     var n = backgroundColor.length, t, i;
     while (n) {
@@ -138,7 +129,6 @@ document.addEventListener("turbolinks:load", function() {
     }
     return backgroundColor;
   }
-
   function buildPieChartDetail(howmuch, howmuches, ids, labels, data, alltotal){
     i = 1
     // 〜idごとに分別//
@@ -186,12 +176,10 @@ document.addEventListener("turbolinks:load", function() {
       }
       i += 1
     }
-
     html = `<p>${alltotal.toLocaleString()}円</p>`
     $('p').remove()
     $('.myChart').append(html)
   }
-
   function buildPieChart(howmuch, howmuches){
     const labels = [];
     const data   = [];
@@ -199,7 +187,6 @@ document.addEventListener("turbolinks:load", function() {
     var ids    = []
     href = location.href
     buildPieChartDetail(howmuch, howmuches, ids, labels, data, alltotal)
-
       // 円グラフ//
     var ctx = document.getElementById("myChart").getContext('2d');
     var myChart = new Chart(ctx, {
