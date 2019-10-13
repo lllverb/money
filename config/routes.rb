@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   root 'months#show'  
   resources :years, only: [:show] do
     resources :months, only: [:show] do

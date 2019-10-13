@@ -1,0 +1,17 @@
+
+= render "devise/shared/links"
+.devise-container
+  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    .devise-container__upper
+      %h2 Log in
+    .devise-container__lower
+      .devise-container__lower--inner
+        .email.form
+          Email
+          = f.email_field :email, placeholder: "メールアドレス", class: "block"
+        .password.form
+          Password
+          = f.password_field :email, placeholder: "7文字以上", class: "block"
+        .form
+          = f.submit "Log In", class: "button block"
+
