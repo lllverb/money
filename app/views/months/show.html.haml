@@ -1,0 +1,14 @@
+#calendar
+.container
+  %h1 
+    カ
+    %br テ
+    ゴ
+    %br リ
+    別
+  = render './myChart'
+  = render './toform' 
+    
+
+- @howmuches.each do |howmuch|
+  %input{name:"howmuches", type: "hidden", value: howmuch.money , class: "howmuches hidden"}

@@ -1,0 +1,7 @@
+#calendar
+.container
+  %h1
+    = @category[0].name
+  = render './myChart'
+  = render './toform' 
+%input{name:"category", type: "hidden", value: @category[0].id , class: "category hidden"}

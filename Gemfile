@@ -62,3 +62,11 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "haml-rails"
 gem "pry-rails"
+gem "gon"
+gem 'jquery-turbolinks'
+gem 'jquery-rails'
+gem "bootstrap4-datetime-picker-rails"
+gem 'momentjs-rails'
+gem "font-awesome-rails"
+gem 'bootstrap', '~> 4.3.1'
+gem 'fullcalendar-rails'

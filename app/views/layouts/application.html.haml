@@ -3,9 +3,15 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Money
+    = include_gon(watch: true)
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %script{src: "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"}
+
   %body
-    = yield
+  = link_to "Z∀IW", root_path, class: "title"
+  = yield
+  %input{name:"theyear", type: "hidden", value: @theyear , class: "theyear hidden"}
+  %input{name:"themonth", type: "hidden", value: @themonth , class: "themonth hidden"}
