@@ -81,8 +81,15 @@ body{
         .thmoney{
           width: 180px;
         }
+        .thdelete{
+          width: 80px;
+        }
         td{
           padding: 2px 8px;
+          a{
+            display: block;
+            font-size: 14px;
+          }
         }
       }
     }

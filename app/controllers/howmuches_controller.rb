@@ -7,6 +7,14 @@ class HowmuchesController < ApplicationController
     end
   end
 
+  def destroy
+    howmuch = Howmuch.find(params[:id])
+    if howmuch.destroy
+      redirect_to year_month_member_category_detail_path(year_id: params[:year_id], month_id: params[:month_id], id: params[:detail_id])
+    else
+    end
+  end
+
 
   private
   def howmuch_params
