@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_13_030654) do
+ActiveRecord::Schema.define(version: 2019_10_13_081013) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -36,9 +36,11 @@ ActiveRecord::Schema.define(version: 2019_10_13_030654) do
     t.string "name"
     t.string "where"
     t.date "when"
+    t.bigint "user_id"
     t.index ["category_id"], name: "index_howmuches_on_category_id"
     t.index ["detail_id"], name: "index_howmuches_on_detail_id"
     t.index ["member_id"], name: "index_howmuches_on_member_id"
+    t.index ["user_id"], name: "index_howmuches_on_user_id"
   end
 
   create_table "members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -74,6 +76,7 @@ ActiveRecord::Schema.define(version: 2019_10_13_030654) do
   add_foreign_key "howmuches", "categories"
   add_foreign_key "howmuches", "details"
   add_foreign_key "howmuches", "members"
+  add_foreign_key "howmuches", "users"
   add_foreign_key "members", "users"
   add_foreign_key "sns_credentials", "users"
 end

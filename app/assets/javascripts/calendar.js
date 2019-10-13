@@ -7,11 +7,9 @@ document.addEventListener("turbolinks:load", function() {
       location.href = '/years/' + theday[0] + '/months/' + theday[1] + '/days/' + theday[2]
     }
   });
-
   // キーボードでカレンダーめくる
   var left  = 0;
   var right = 0;
-
   // キーボード押した
   function keydown(event){
     if(event.keyCode == 37){ left = 1; }
@@ -23,7 +21,6 @@ document.addEventListener("turbolinks:load", function() {
     if(event.keyCode == 37){ left = 0; }
     if(event.keyCode == 39){ right = 0; }
   }
-
   function disp(){
     if(left==1)  { $('.fc-prev-button').click() }
     if(right==1) { $('.fc-next-button').click() }

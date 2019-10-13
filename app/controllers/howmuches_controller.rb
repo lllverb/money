@@ -10,6 +10,6 @@ class HowmuchesController < ApplicationController
 
   private
   def howmuch_params
-    params.require(:howmuch).permit(:name, :money, :where, :when).merge(member_id: params[:member_id], category_id: params[:category_id], detail_id: params[:detail_id])
+    params.require(:howmuch).permit(:name, :money, :where, :when, :user_id).merge(member_id: params[:member_id], category_id: params[:category_id], detail_id: params[:detail_id])
   end
 end
