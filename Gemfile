@@ -70,3 +70,7 @@ gem 'momentjs-rails'
 gem "font-awesome-rails"
 gem 'bootstrap', '~> 4.3.1'
 gem 'fullcalendar-rails'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
+gem 'devise'
