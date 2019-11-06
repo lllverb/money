@@ -16,7 +16,7 @@ document.addEventListener("turbolinks:load", function() {
     if(event.keyCode == 39){ right = 1; }
     disp() 
   }
-  // キーボード話した
+  // キーボード離した
   function keyup(event){
     if(event.keyCode == 37){ left = 0; }
     if(event.keyCode == 39){ right = 0; }
