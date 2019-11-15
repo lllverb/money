@@ -20,7 +20,7 @@
   * メンバー別表示
 
 ## プレビュー
-![moneytop](https://user-images.githubusercontent.com/54735495/68935450-010c3c00-07dc-11ea-8c91-49bee84e8d7e.gif)
+![moneytop](https://user-images.githubusercontent.com/54735495/68936779-90b2ea00-07de-11ea-86c5-2326759d0115.gif)
 
 ## 使用技術
 * Ruby/Ruby on Rails
