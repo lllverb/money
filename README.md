@@ -36,7 +36,6 @@
 * JavaScript/jQuery
 * Chart.js
 * Bootstrap
-* 
 * MySQL
 * GitHub
 * AWS
