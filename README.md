@@ -20,7 +20,7 @@
   * メンバー別表示
 
 ## プレビュー
-https://github.com/lllverb/money/issues/6#issue-523379582
+![demo](https://github.com/lllverb/money/issues/6#issue-523379582)
 https://user-images.githubusercontent.com/54735495/68935450-010c3c00-07dc-11ea-8c91-49bee84e8d7e.gif
 
 ## 使用技術
