@@ -1,4 +1,4 @@
-const backgroundColor = [
+var backgroundColor = [
   "#CCFFFF", "#99FFFF", "#66FFFF", "#33FFFF", "#00FFFF", 
   "#FFFFCC", "#CCFFCC", "#99FFCC", "#66FFCC", "#33FFCC", "#00FFCC",
   "#FFFF99", "#CCFF99", "#99FF99", "#66FF99", "#33FF99", "#00FF99",
@@ -66,7 +66,7 @@ document.addEventListener("turbolinks:load", function() {
         $('.howmuches').each(function(e, x){
           $('.hidden').remove();
         })
-        const newArray = []
+        var newArray = []
         data.forEach(function(e){
           newArray.push(e);
           buildHTML(e.money)
@@ -181,8 +181,8 @@ document.addEventListener("turbolinks:load", function() {
     $('.myChart').append(html)
   }
   function buildPieChart(howmuch, howmuches){
-    const labels = [];
-    const data   = [];
+    var labels = [];
+    var data   = [];
     let alltotal = 0;
     var ids    = []
     href = location.href
@@ -202,7 +202,7 @@ document.addEventListener("turbolinks:load", function() {
       // 円グラフ//
 // リンク付与///////
     document.getElementById("myChart").onclick = function(evt){
-      const activePoints = myChart.getElementsAtEvent(evt);
+      var activePoints = myChart.getElementsAtEvent(evt);
       var month = $('h2')[0].innerText.replace('年', '').replace('月', '').split(' ')
       if(activePoints.length > 0){
         var clickedElementindex = activePoints[0]["_index"];
