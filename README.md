@@ -20,8 +20,7 @@
   * メンバー別表示
 
 ## プレビュー
-![demo](https://github.com/lllverb/money/issues/6#issue-523379582)
-https://user-images.githubusercontent.com/54735495/68935450-010c3c00-07dc-11ea-8c91-49bee84e8d7e.gif
+![moneytop](https://user-images.githubusercontent.com/54735495/68935450-010c3c00-07dc-11ea-8c91-49bee84e8d7e.gif)
 
 ## 使用技術
 * Ruby/Ruby on Rails
